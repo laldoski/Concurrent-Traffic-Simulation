@@ -46,11 +46,11 @@ public:
     // typical behaviour methods
       void waitForGreen();
       void simulate();
-      void getCurrentPhase();
+     // void getCurrentPhase();
       enum TrafficLightPhase {red, green};
 
      // getters / setters
-     TrafficLightPhase getcurrentPhase() //getter
+     TrafficLightPhase getCurrentPhase() //getter
      {
        return _currentPhase;
      }

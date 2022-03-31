@@ -75,7 +75,7 @@ void TrafficLight::cycleThroughPhases()
     std::uniform_int_distribution<> distr(4, 6);
     if (timeSinceCurrentTime >= distr(eng))
     {
-      if (getcurrentPhase() == green)
+      if (getCurrentPhase() == green)
       {
         setcurrentPhase(red);
       }
