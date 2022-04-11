@@ -43,7 +43,7 @@ void Vehicle::drive()
 
     // init stop watch
     lastUpdate = std::chrono::system_clock::now();
-    std::cout << "last update :" << lastUpdate <<std::endl;
+    
     while (true)
     {
         // sleep at every iteration to reduce CPU usage

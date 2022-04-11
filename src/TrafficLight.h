@@ -41,7 +41,7 @@ class TrafficLight: TrafficObject
 public:
     // constructor / desctructor
       TrafficLight();
-      ~TrafficLight();  
+     // ~TrafficLight();  
 
     // typical behaviour methods
       void waitForGreen();
