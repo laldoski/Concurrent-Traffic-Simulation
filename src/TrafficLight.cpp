@@ -4,7 +4,10 @@
 #include <mutex>
 #include <future>
 #include "TrafficLight.h"
-
+#include <algorithm>
+//#include <deque>
+std::random_device rd;
+std::mt19937 eng(rd());
 /* Implementation of class "MessageQueue" */
 
 template <typename T>
@@ -26,7 +29,8 @@ void MessageQueue<T>::send(T &&msg)
   // FP.4a : The method send should use the mechanisms std::lock_guard<std::mutex>
   // as well as _condition.notify_one() to add a new message to the queue and afterwards send a notification.
   std::lock_guard<std::mutex> uLock(_mu);
-  _queue.push_front(std::move(msg));
+   _queue.clear();
+  _queue.emplace_front(std::move(msg));
   _condition.notify_one();
 }
 
@@ -36,6 +40,9 @@ TrafficLight::TrafficLight()
 {
   _currentPhase = TrafficLightPhase::red;
 }
+TrafficLight::~TrafficLight(){}
+
+
 
 void TrafficLight::waitForGreen()
 {
@@ -70,9 +77,8 @@ void TrafficLight::cycleThroughPhases()
   {
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
     long timeSinceCurrentTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - currentTime).count();
-    std::random_device rd;
-    std::mt19937 eng(rd());
-    std::uniform_int_distribution<> distr(4, 6);
+    std::uniform_int_distribution<int> distr(4000.0, 6000.0);
+    
     if (timeSinceCurrentTime >= distr(eng))
     {
       if (getCurrentPhase() == green)
@@ -82,9 +88,11 @@ void TrafficLight::cycleThroughPhases()
       else
       {
         setcurrentPhase(green);
+      
+        _messages.send(green);
       }
 
-      _messages.receive();
+      
       currentTime = std::chrono::system_clock::now();
     }
   }

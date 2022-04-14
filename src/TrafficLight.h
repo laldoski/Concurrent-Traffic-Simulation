@@ -41,7 +41,7 @@ class TrafficLight: TrafficObject
 public:
     // constructor / desctructor
       TrafficLight();
-     // ~TrafficLight();  
+     ~TrafficLight();  
 
     // typical behaviour methods
       void waitForGreen();
@@ -70,8 +70,6 @@ private:
 
   MessageQueue <TrafficLightPhase> _messages;
   TrafficLightPhase _currentPhase;
-  std::condition_variable _condition;
-  std::mutex _mutex;
 };
 
 
